@@ -1,0 +1,21 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: guli-coupon
+  config:
+    import:
+      - optional:nacos:gulimall.yaml
+      - optional:nacos:guli-coupon-dev.yaml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: localhost:8848
+        namespace: 788dc2fc-6986-4479-8534-9f9e875dd426
+        username: nacos
+        password: nacos
