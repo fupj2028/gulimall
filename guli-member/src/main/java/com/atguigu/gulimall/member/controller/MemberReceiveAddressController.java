@@ -1,10 +1,12 @@
 package com.atguigu.gulimall.member.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,6 +87,11 @@ public class MemberReceiveAddressController {
 		memberReceiveAddressService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    @GetMapping("/{memberId}/addresses")
+    public List<MemberReceiveAddressEntity> getAddressesByMemberId(@PathVariable("memberId") Long memberId) {
+        return memberReceiveAddressService.getAddressesByMemberId(memberId);
     }
 
 }

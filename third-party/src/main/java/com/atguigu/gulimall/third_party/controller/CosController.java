@@ -50,4 +50,18 @@ public class CosController {
         URL url = cosClient.generatePresignedUrl(bucket, key, expiration, HttpMethodName.GET);
         return R.ok().put("data", url.toString());
     }
+
+    @RequestMapping("/delete")
+    public R delete(@RequestParam String key) {
+        if (key.startsWith("http://") || key.startsWith("https://")) {
+            try {
+                key = new java.net.URL(key).getPath().substring(1);
+            } catch (Exception e) {
+                return R.error("无效的URL");
+            }
+        }
+        Date expiration = new Date(System.currentTimeMillis() + 30 * 60 * 1000);
+        URL url = cosClient.generatePresignedUrl(bucket, key, expiration, HttpMethodName.DELETE);
+        return R.ok().put("data", url.toString());
+    }
 }

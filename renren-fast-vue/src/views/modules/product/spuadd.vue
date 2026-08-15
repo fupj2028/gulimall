@@ -194,6 +194,15 @@
                 <el-input v-model="scope.row.price"></el-input>
               </template>
             </el-table-column>
+            <el-table-column label="操作" width="80">
+              <template slot-scope="scope">
+                <el-button
+                  type="danger"
+                  size="mini"
+                  @click="deleteSku(scope.$index)"
+                >删除</el-button>
+              </template>
+            </el-table-column>
             <el-table-column type="expand">
               <template slot-scope="scope">
                 <el-row>
@@ -216,7 +225,7 @@
                       v-for="(img,index) in spu.images"
                       :key="index"
                     >
-                      <img :src="img" style="width:160px;height:120px" />
+                      <img :src="imageUrlCache[img] || ''" style="width:160px;height:120px" />
                       <div style="padding: 14px;">
                         <el-row>
                           <el-col :span="12">
@@ -349,6 +358,7 @@
 import CategoryCascader from "../common/category-cascader";
 import BrandSelect from "../common/brand-select";
 import MultiUpload from "@/components/upload/multiUpload";
+import { getAccessUrl } from "@/components/upload/policy";
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: { CategoryCascader, BrandSelect, MultiUpload },
@@ -359,6 +369,7 @@ export default {
       brandIdSub: null,
       uploadDialogVisible: false,
       uploadImages: [],
+      imageUrlCache: {},
       step: 0,
       //spu_name  spu_description  catalog_id  brand_id  weight  publish_status
       spu: {
@@ -393,10 +404,10 @@ export default {
           { required: true, message: "请选择一个品牌", trigger: "blur" }
         ],
         decript: [
-          { required: true, message: "请上传商品详情图集", trigger: "blur" }
+          { required: true, message: "请上传商品详情图集", trigger: "change", type: "array" }
         ],
         images: [
-          { required: true, message: "请上传商品图片集", trigger: "blur" }
+          { required: true, message: "请上传商品图片集", trigger: "change", type: "array" }
         ],
         weight: [
           {
@@ -442,6 +453,19 @@ export default {
 
       this.spu.images = imgArr; //去重
       console.log("this.spu.skus", this.spu.skus);
+    },
+    "spu.images": {
+      handler(keys) {
+        if (keys && keys.length > 0) {
+          keys.forEach(key => {
+            if (!this.imageUrlCache[key]) {
+              getAccessUrl(key).then(url => {
+                this.$set(this.imageUrlCache, key, url);
+              });
+            }
+          });
+        }
+      }
     }
   },
   //方法集合
@@ -625,6 +649,9 @@ export default {
       this.spu.skus = skus;
       console.log("结果!!!", this.spu.skus, this.dataResp.tableAttrColumn);
     },
+    deleteSku(index) {
+      this.spu.skus.splice(index, 1);
+    },
     //判断如果包含之前的sku的descar组合，就返回这个sku的详细信息；
     hasAndReturnSku(skus, descar) {
       let res = null;
@@ -783,10 +810,10 @@ export default {
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    this.catPathSub = PubSub.subscribe("catPath", (msg, val) => {
+    this.catPathSub = this.PubSub.subscribe("catPath", (msg, val) => {
       this.spu.catalogId = val[val.length - 1];
     });
-    this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
+    this.brandIdSub = this.PubSub.subscribe("brandId", (msg, val) => {
       this.spu.brandId = val;
     });
     this.getMemberLevels();
@@ -796,9 +823,9 @@ export default {
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
   beforeDestroy() {
-    PubSub.unsubscribe(this.catPathSub);
-    PubSub.unsubscribe(this.brandIdSub);
-  }, //生命周期 - 销毁之前
+    this.PubSub.unsubscribe(this.catPathSub);
+    this.PubSub.unsubscribe(this.brandIdSub);
+  }, //生命周期 - 销毁之前
   destroyed() {}, //生命周期 - 销毁完成
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
 };

@@ -1,5 +1,6 @@
 server:
-  port: 12000
+  port: 14010
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -8,6 +9,19 @@ spring:
     import:
       - optional:nacos:gulimall.yaml
       - optional:nacos:guli-order-dev.yaml
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual
   cloud:
     nacos:
       discovery:
@@ -19,3 +33,10 @@ spring:
         namespace: 788dc2fc-6986-4479-8534-9f9e875dd426
         username: nacos
         password: nacos
+
+gulimall:
+  alipay:
+    # 模拟支付宝超时收单时长（秒），与商家取消订单消息 TTL 保持一致（30分钟）
+    pay-timeout-seconds: 1800
+    # 商家异步通知回调地址（模拟支付宝 POST 到这里）
+    notify-url: http://localhost:14010/pay/alipay/notify

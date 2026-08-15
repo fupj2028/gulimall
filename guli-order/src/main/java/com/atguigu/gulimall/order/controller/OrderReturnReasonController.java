@@ -19,7 +19,7 @@ import com.atguigu.gulimall.common.utils.R;
 
 
 /**
- * 退货原�?
+ * 閫€璐у師鍥?
  *
  * @author fupengju
  * @email 3545485659@qq.com
@@ -32,7 +32,7 @@ public class OrderReturnReasonController {
     private OrderReturnReasonService orderReturnReasonService;
 
     /**
-     * 列表
+     * 鍒楄〃
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:orderreturnreason:list")
@@ -44,7 +44,7 @@ public class OrderReturnReasonController {
 
 
     /**
-     * 信息
+     * 淇℃伅
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:orderreturnreason:info")
@@ -55,7 +55,7 @@ public class OrderReturnReasonController {
     }
 
     /**
-     * 保存
+     * 淇濆瓨
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:orderreturnreason:save")
@@ -66,7 +66,7 @@ public class OrderReturnReasonController {
     }
 
     /**
-     * 修改
+     * 淇敼
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:orderreturnreason:update")
@@ -77,7 +77,7 @@ public class OrderReturnReasonController {
     }
 
     /**
-     * 删除
+     * 鍒犻櫎
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:orderreturnreason:delete")

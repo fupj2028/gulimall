@@ -3,15 +3,17 @@ package com.atguigu.gulimall.product.dao;
 import com.atguigu.gulimall.product.entity.SkuSaleAttrValueEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
-/**
- * sku销售属性&值
- * 
- * @author fupengju
- * @email 3545485659@qq.com
- * @date 2026-07-05 17:59:52
- */
+import java.util.List;
+
 @Mapper
 public interface SkuSaleAttrValueDao extends BaseMapper<SkuSaleAttrValueEntity> {
-	
+
+    @Select("SELECT ssav.* FROM pms_sku_sale_attr_value ssav " +
+            "LEFT JOIN pms_sku_info si ON ssav.sku_id = si.sku_id " +
+            "WHERE si.spu_id = #{spuId} " +
+            "ORDER BY ssav.attr_id, ssav.attr_sort")
+    List<SkuSaleAttrValueEntity> selectSaleAttrValuesBySpuId(@Param("spuId") Long spuId);
 }

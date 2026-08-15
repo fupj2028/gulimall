@@ -8,6 +8,21 @@ spring:
     import:
       - optional:nacos:gulimall.yaml
       - optional:nacos:guli-ware-dev.yaml
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual
   cloud:
     nacos:
       discovery:

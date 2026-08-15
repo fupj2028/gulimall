@@ -19,7 +19,7 @@ import com.atguigu.gulimall.common.utils.R;
 
 
 /**
- * 支付信息�?
+ * 鏀粯淇℃伅琛?
  *
  * @author fupengju
  * @email 3545485659@qq.com
@@ -32,7 +32,7 @@ public class PaymentInfoController {
     private PaymentInfoService paymentInfoService;
 
     /**
-     * 列表
+     * 鍒楄〃
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:paymentinfo:list")
@@ -44,7 +44,7 @@ public class PaymentInfoController {
 
 
     /**
-     * 信息
+     * 淇℃伅
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:paymentinfo:info")
@@ -55,7 +55,7 @@ public class PaymentInfoController {
     }
 
     /**
-     * 保存
+     * 淇濆瓨
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:paymentinfo:save")
@@ -66,7 +66,7 @@ public class PaymentInfoController {
     }
 
     /**
-     * 修改
+     * 淇敼
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:paymentinfo:update")
@@ -77,7 +77,7 @@ public class PaymentInfoController {
     }
 
     /**
-     * 删除
+     * 鍒犻櫎
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:paymentinfo:delete")

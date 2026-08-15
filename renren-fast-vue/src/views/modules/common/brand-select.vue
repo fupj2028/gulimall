@@ -23,12 +23,7 @@ export default {
     //这里存放数据
     return {
       catId: 0,
-      brands: [
-        {
-          label: "a",
-          value: 1
-        }
-      ],
+      brands: [],
       brandId: "",
       subscribe: null
     };
@@ -58,20 +53,20 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {
+    mounted() {
     //监听三级分类消息的变化
-    this.subscribe = PubSub.subscribe("catPath", (msg, val) => {
+    this.subscribe = this.PubSub.subscribe("catPath", (msg, val) => {
       this.catId = val[val.length - 1];
       this.getCatBrands();
     });
   },
-  beforeCreate() {}, //生命周期 - 创建之前
-  beforeMount() {}, //生命周期 - 挂载之前
-  beforeUpdate() {}, //生命周期 - 更新之前
-  updated() {}, //生命周期 - 更新之后
+  beforeCreate() {}, //生命周期 - 创建之前
+  beforeMount() {}, //生命周期 - 挂载之前
+  beforeUpdate() {}, //生命周期 - 更新之前
+  updated() {}, //生命周期 - 更新之后
   beforeDestroy() {
-    PubSub.unsubscribe(this.subscribe); //销毁订阅
-  }, //生命周期 - 销毁之前
+    this.PubSub.unsubscribe(this.subscribe); //销毁订阅
+  }, //生命周期 - 销毁之前
   destroyed() {}, //生命周期 - 销毁完成
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
 };

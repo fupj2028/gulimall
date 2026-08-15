@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.atguigu.gulimall.common.Exception.ErrorCode;
 import com.atguigu.gulimall.common.utils.R;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestControllerAdvice(basePackages = "com.atguigu.gulimall.product.controller")
 public class GulimallExceptionControllerAdvice {
 
@@ -29,8 +32,14 @@ public class GulimallExceptionControllerAdvice {
                 .put("msg", errorMap);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public R handleIllegalArgument(IllegalArgumentException e) {
+        return R.error(ErrorCode.InvalidParameter.getCode(), e.getMessage());
+    }
+
     @ExceptionHandler(Throwable.class)
     public R handleException(Throwable e) {
-        return R.error(ErrorCode.UnknownError.getCode(),ErrorCode.UnknownError.getMessage());
+        log.error("发生未知异常:", e);
+        return R.error(ErrorCode.UnknownError.getCode(), e.getMessage());
     }
 }

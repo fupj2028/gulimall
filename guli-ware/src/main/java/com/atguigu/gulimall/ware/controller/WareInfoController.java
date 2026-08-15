@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.gulimall.ware.entity.WareInfoEntity;
 import com.atguigu.gulimall.ware.service.WareInfoService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.R;
 
@@ -37,7 +38,10 @@ public class WareInfoController {
     @RequestMapping("/list")
     //@RequiresPermissions("ware:wareinfo:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = wareInfoService.queryPage(params);
+
+        // PageUtils page = wareInfoService.queryPage(params);
+
+        PageUtils page = wareInfoService.queryPageByKey(params);
 
         return R.ok().put("page", page);
     }

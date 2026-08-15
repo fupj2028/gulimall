@@ -46,7 +46,9 @@ public class BrandController {
     @RequestMapping("/list")
     //@RequiresPermissions("product:brand:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = brandService.queryPage(params);
+        // PageUtils page = brandService.queryPage(params);
+
+        PageUtils page = brandService.queryPageByKey(params);
 
         return R.ok().put("page", page);
     }

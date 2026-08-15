@@ -7,8 +7,6 @@ import com.atguigu.gulimall.product.entity.ProductAttrValueEntity;
 import java.util.Map;
 
 /**
- * spu属性�?
- *
  * @author fupengju
  * @email 3545485659@qq.com
  * @date 2026-07-05 17:59:52

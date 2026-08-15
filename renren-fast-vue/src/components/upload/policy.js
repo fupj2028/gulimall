@@ -10,3 +10,27 @@ export function policy(fileName) {
         })
     });
 }
+
+export function getAccessUrl(key) {
+  return new Promise((resolve, reject) => {
+    http({
+      url: http.adornUrl("/thirdparty/cos/access"),
+      method: "get",
+      params: http.adornParams({ key })
+    }).then(({ data }) => {
+      resolve(data.data)
+    })
+  })
+}
+
+export function getDeleteUrl(key) {
+  return new Promise((resolve, reject) => {
+    http({
+      url: http.adornUrl("/thirdparty/cos/delete"),
+      method: "get",
+      params: http.adornParams({ key })
+    }).then(({ data }) => {
+      resolve(data.data)
+    })
+  })
+}

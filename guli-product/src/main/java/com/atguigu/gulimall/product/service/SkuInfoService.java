@@ -2,8 +2,11 @@ package com.atguigu.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gulimall.common.utils.PageUtils;
+import com.atguigu.gulimall.common.to.SkuSeckillInfoVo;
 import com.atguigu.gulimall.product.entity.SkuInfoEntity;
+import com.atguigu.gulimall.product.vo.SkuOrderInfoVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +19,11 @@ import java.util.Map;
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils queryPageByCondition(Map<String,Object> params);
+
+    Map<Long, SkuOrderInfoVo> getOrderSkuInfo(List<Long> skuIds);
+
+    Map<Long, SkuSeckillInfoVo> getSeckillInfo(List<Long> skuIds);
 }
 

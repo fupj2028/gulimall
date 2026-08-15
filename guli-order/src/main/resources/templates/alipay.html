@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>支付宝 - 收银台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", Arial, sans-serif; background: #f5f7fa; }
+        .header { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 16px 0; }
+        .header .wrap { width: 1000px; margin: 0 auto; display: flex; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: #1677ff; margin-right: 16px; }
+        .sandbox-tag { background: #ff6600; color: #fff; font-size: 12px; padding: 2px 8px; border-radius: 3px; margin-left: 12px; }
+        .content { width: 1000px; margin: 30px auto; background: #fff; border: 1px solid #e8e8e8; border-radius: 6px; overflow: hidden; }
+        .order-info { padding: 30px 40px; border-bottom: 1px dashed #e8e8e8; }
+        .order-info h2 { font-size: 18px; color: #333; margin-bottom: 20px; }
+        .order-info .row { display: flex; margin-bottom: 12px; font-size: 14px; color: #666; }
+        .order-info .row .label { width: 100px; color: #999; }
+        .order-info .amount { color: #ff4200; font-size: 26px; font-weight: bold; }
+        .order-info .timeout { color: #ff4200; }
+        .order-info .timeout b { font-size: 18px; }
+        .pay-box { padding: 30px 40px 40px; }
+        .pay-box .buyer { font-size: 14px; color: #666; margin-bottom: 20px; }
+        .pay-box .buyer span { color: #333; font-weight: bold; }
+        .pwd-row { margin-bottom: 24px; }
+        .pwd-row label { display: block; font-size: 14px; color: #666; margin-bottom: 8px; }
+        .pwd-row input { width: 320px; height: 40px; border: 1px solid #ccc; border-radius: 4px; padding: 0 12px; font-size: 16px; letter-spacing: 8px; }
+        .pwd-row input:focus { outline: none; border-color: #1677ff; }
+        .confirm-btn { display: block; width: 320px; height: 44px; background: #1677ff; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        .confirm-btn:hover { background: #0e5fd8; }
+        .confirm-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .tip { margin-top: 16px; font-size: 12px; color: #999; }
+        .closed-box { padding: 60px 40px; text-align: center; }
+        .closed-box h3 { font-size: 22px; color: #333; margin-bottom: 16px; }
+        .closed-box .closed-msg { font-size: 14px; color: #999; margin-bottom: 24px; }
+        .closed-box a { display: inline-block; padding: 10px 32px; background: #1677ff; color: #fff; border-radius: 4px; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="wrap">
+            <span class="logo">支付宝</span>
+            <span>安全收银台</span>
+            <span class="sandbox-tag">沙箱环境</span>
+        </div>
+    </div>
+    <div class="content">
+        <div th:if="${!closed}">
+            <div class="order-info">
+                <h2>订单确认</h2>
+                <div class="row">
+                    <span class="label">订单号</span>
+                    <span th:text="${payVo.outTradeNo}">2026081012345678</span>
+                </div>
+                <div class="row">
+                    <span class="label">商品名称</span>
+                    <span th:text="${payVo.subject}">谷粒商城订单</span>
+                </div>
+                <div class="row">
+                    <span class="label">支付金额</span>
+                    <span class="amount">￥<span th:text="${payVo.totalAmount}">99.00</span></span>
+                </div>
+                <div class="row">
+                    <span class="label">支付时限</span>
+                    <span class="timeout">请在 <b id="countdown" th:text="${expireSeconds}">1800</b> 秒内完成支付，超时后交易将自动关闭，订单会被取消</span>
+                </div>
+            </div>
+            <div class="pay-box">
+                <div class="buyer">
+                    当前买家账号：<span th:text="${buyer}">sandbox_buyer_xxxx@alipay.com</span>
+                </div>
+                <div class="pwd-row">
+                    <label>请输入支付密码</label>
+                    <input type="password" id="payPwd" maxlength="6">
+                </div>
+                <button class="confirm-btn" id="confirmBtn">确认支付</button>
+                <div class="tip">模拟支付宝沙箱环境，输入任意6位密码即可完成支付；超时后交易将自动关闭</div>
+            </div>
+        </div>
+        <div class="closed-box" th:if="${closed}">
+            <h3>交易已关闭</h3>
+            <p class="closed-msg" th:text="${msg}">超时未支付，交易已自动关闭</p>
+            <a th:href="'/api/member/order/list'">返回订单列表</a>
+        </div>
+    </div>
+    <form id="payForm" method="post" action="/order/pay/alipay/confirm" style="display:none;" th:if="${!closed}">
+        <input type="hidden" name="outTradeNo" th:value="${payVo.outTradeNo}">
+        <input type="hidden" name="totalAmount" th:value="${payVo.totalAmount}">
+    </form>
+    <form id="closeForm" method="post" action="/order/pay/alipay/close" style="display:none;" th:if="${!closed}">
+        <input type="hidden" name="outTradeNo" th:value="${payVo.outTradeNo}">
+    </form>
+    <script th:if="${!closed}">
+        document.getElementById('confirmBtn').onclick = function () {
+            var pwd = document.getElementById('payPwd').value;
+            if (!pwd || pwd.length < 6) {
+                alert('请输入6位支付密码');
+                return;
+            }
+            document.getElementById('payForm').submit();
+        };
+        //倒计时归零：自动模拟支付宝超时收单，关闭交易并通知商家
+        var seconds = parseInt(document.getElementById('countdown').textContent) || 0;
+        var countdownEl = document.getElementById('countdown');
+        var closeFormEl = document.getElementById('closeForm');
+        var timer = setInterval(function () {
+            seconds--;
+            if (seconds <= 0) {
+                clearInterval(timer);
+                countdownEl.textContent = 0;
+                var btn = document.getElementById('confirmBtn');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.textContent = '交易已关闭';
+                }
+                closeFormEl.submit();
+            } else {
+                countdownEl.textContent = seconds;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

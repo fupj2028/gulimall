@@ -19,7 +19,7 @@ import com.atguigu.gulimall.common.utils.R;
 
 
 /**
- * 退款信�?
+ * 閫€娆句俊鎭?
  *
  * @author fupengju
  * @email 3545485659@qq.com
@@ -32,7 +32,7 @@ public class RefundInfoController {
     private RefundInfoService refundInfoService;
 
     /**
-     * 列表
+     * 鍒楄〃
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:refundinfo:list")
@@ -44,7 +44,7 @@ public class RefundInfoController {
 
 
     /**
-     * 信息
+     * 淇℃伅
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:refundinfo:info")
@@ -55,7 +55,7 @@ public class RefundInfoController {
     }
 
     /**
-     * 保存
+     * 淇濆瓨
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:refundinfo:save")
@@ -66,7 +66,7 @@ public class RefundInfoController {
     }
 
     /**
-     * 修改
+     * 淇敼
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:refundinfo:update")
@@ -77,7 +77,7 @@ public class RefundInfoController {
     }
 
     /**
-     * 删除
+     * 鍒犻櫎
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:refundinfo:delete")

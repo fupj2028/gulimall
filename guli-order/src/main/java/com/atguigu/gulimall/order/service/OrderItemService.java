@@ -7,7 +7,7 @@ import com.atguigu.gulimall.order.entity.OrderItemEntity;
 import java.util.Map;
 
 /**
- * 订单项信�?
+ * 璁㈠崟椤逛俊鎭?
  *
  * @author fupengju
  * @email 3545485659@qq.com

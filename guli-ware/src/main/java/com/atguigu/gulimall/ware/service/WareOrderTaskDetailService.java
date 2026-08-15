@@ -7,7 +7,7 @@ import com.atguigu.gulimall.ware.entity.WareOrderTaskDetailEntity;
 import java.util.Map;
 
 /**
- * 库存工作�?
+ * 搴撳瓨宸ヤ綔鍗?
  *
  * @author fupengju
  * @email 3545485659@qq.com

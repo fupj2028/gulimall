@@ -1,10 +1,12 @@
 package com.atguigu.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.gulimall.coupon.entity.SeckillSessionEntity;
 import com.atguigu.gulimall.coupon.service.SeckillSessionService;
+import com.atguigu.gulimall.common.to.SeckillSessionWithSkusTo;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.R;
 
@@ -85,6 +88,14 @@ public class SeckillSessionController {
 		seckillSessionService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    /**
+     * 最近3天的秒杀场次及关联商品（供秒杀服务上架使用）
+     */
+    @GetMapping("/in3days")
+    public List<SeckillSessionWithSkusTo> in3days(){
+        return seckillSessionService.listSessionsWithSkusIn3Days();
     }
 
 }

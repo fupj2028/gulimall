@@ -7,6 +7,7 @@ import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.region.Region;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class CosConfig {
 
     @Bean
+    @ConditionalOnProperty(name = "cos.secret-id")
     public COSClient cosClient(CosProperties properties) {
         COSCredentials cred = new BasicCOSCredentials(properties.getSecretId(), properties.getSecretKey());
         Region region = new Region(properties.getRegion());

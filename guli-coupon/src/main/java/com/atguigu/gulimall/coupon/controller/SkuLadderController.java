@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -62,6 +63,12 @@ public class SkuLadderController {
     public R save(@RequestBody SkuLadderEntity skuLadder){
 		skuLadderService.save(skuLadder);
 
+        return R.ok();
+    }
+
+    @RequestMapping("/saveBatch")
+    public R saveBatch(@RequestBody List<SkuLadderEntity> entities) {
+        skuLadderService.saveBatch(entities);
         return R.ok();
     }
 

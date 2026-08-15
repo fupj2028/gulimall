@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,8 +20,6 @@ import com.atguigu.gulimall.common.utils.R;
 
 
 /**
- * sku销售属�?�?
- *
  * @author fupengju
  * @email 3545485659@qq.com
  * @date 2026-07-05 17:59:52
@@ -30,6 +29,17 @@ import com.atguigu.gulimall.common.utils.R;
 public class SkuSaleAttrValueController {
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
+
+    /**
+     * 字符串列表
+     */
+    @RequestMapping("/stringlist/{skuId}")
+    //@RequiresPermissions("product:skusaleattrvalue:list")
+    public List<String> stringList(@PathVariable("skuId") Long skuId){
+        List<String> page = skuSaleAttrValueService.querySaleAttrAsString(skuId);
+
+        return page;
+    }
 
     /**
      * 列表

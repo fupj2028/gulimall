@@ -15,10 +15,14 @@
         <module>guli-member</module>
         <module>guli-coupon</module>
         <module>guli-gateway</module>
+        <module>guli-auth</module>
+        <module>guli-cart</module>
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>guli-common</module>
         <module>third-party</module>
+        <module>guli-search</module>
+        <module>guli-seckill</module>
     </modules>
 
 

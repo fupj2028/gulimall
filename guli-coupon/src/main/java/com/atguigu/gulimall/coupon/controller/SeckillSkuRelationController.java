@@ -60,6 +60,9 @@ public class SeckillSkuRelationController {
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:seckillskurelation:save")
     public R save(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
+        if (seckillSkuRelationService.existsDuplicated(seckillSkuRelation)) {
+            return R.error("该场次已存在相同的秒杀商品，请勿重复添加");
+        }
 		seckillSkuRelationService.save(seckillSkuRelation);
 
         return R.ok();
@@ -71,6 +74,9 @@ public class SeckillSkuRelationController {
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:seckillskurelation:update")
     public R update(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
+        if (seckillSkuRelationService.existsDuplicated(seckillSkuRelation)) {
+            return R.error("该场次已存在相同的秒杀商品，请勿重复添加");
+        }
 		seckillSkuRelationService.updateById(seckillSkuRelation);
 
         return R.ok();

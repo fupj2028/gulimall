@@ -1,0 +1,36 @@
+server:
+  port: 20000
+
+spring:
+  application:
+    name: guli-auth
+  config:
+    import:
+      - optional:nacos:gulimall.yaml
+      - optional:nacos:guli-auth-dev.yaml
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+  session:
+    store-type: redis
+
+github:
+  client:
+    client-id: ${GITHUB_CLIENT_ID}
+    client-secret: ${GITHUB_CLIENT_SECRET}
+  redirect:
+    uri: http://124.222.125.141/login/oauth/authorize
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: localhost:8848
+        namespace: 788dc2fc-6986-4479-8534-9f9e875dd426
+        username: nacos
+        password: nacos

@@ -19,7 +19,7 @@ import com.atguigu.gulimall.common.utils.R;
 
 
 /**
- * 订单项信�?
+ * 璁㈠崟椤逛俊鎭?
  *
  * @author fupengju
  * @email 3545485659@qq.com
@@ -32,7 +32,7 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
     /**
-     * 列表
+     * 鍒楄〃
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:orderitem:list")
@@ -44,7 +44,7 @@ public class OrderItemController {
 
 
     /**
-     * 信息
+     * 淇℃伅
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:orderitem:info")
@@ -55,7 +55,7 @@ public class OrderItemController {
     }
 
     /**
-     * 保存
+     * 淇濆瓨
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:orderitem:save")
@@ -66,7 +66,7 @@ public class OrderItemController {
     }
 
     /**
-     * 修改
+     * 淇敼
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:orderitem:update")
@@ -77,7 +77,7 @@ public class OrderItemController {
     }
 
     /**
-     * 删除
+     * 鍒犻櫎
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:orderitem:delete")

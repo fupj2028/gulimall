@@ -1,11 +1,17 @@
 package com.atguigu.gulimall.ware.controller;
 
+import com.atguigu.gulimall.common.to.SkuHasStockVo;
+import com.atguigu.gulimall.common.to.StockLockedTo;
+import com.atguigu.gulimall.common.to.WareSkuLockVo;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,6 +91,22 @@ public class WareSkuController {
 		wareSkuService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    /**
+     * 查询SKU是否有库存
+     */
+    @PostMapping("/hasstock")
+    public List<SkuHasStockVo> getSkuHasStock(@RequestBody List<Long> skuIds) {
+        return wareSkuService.getSkuHasStock(skuIds);
+    }
+
+    /**
+     * 锁定库存
+     */
+    @PostMapping("/lockstock")
+    public StockLockedTo lockStock(@RequestBody WareSkuLockVo wareSkuLockVo) {
+        return wareSkuService.lockStock(wareSkuLockVo);
     }
 
 }

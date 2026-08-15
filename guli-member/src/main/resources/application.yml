@@ -8,6 +8,15 @@ spring:
     import:
       - optional:nacos:gulimall.yaml
       - optional:nacos:guli-member-dev.yaml
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+  session:
+    store-type: redis
+
   cloud:
     nacos:
       discovery:

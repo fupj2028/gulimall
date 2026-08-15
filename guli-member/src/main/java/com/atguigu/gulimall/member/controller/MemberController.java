@@ -5,9 +5,9 @@ import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +20,6 @@ import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.R;
 
 
-
 /**
  * 会员
  *
@@ -28,7 +27,6 @@ import com.atguigu.gulimall.common.utils.R;
  * @email 3545485659@qq.com
  * @date 2026-07-05 17:57:45
  */
-@RefreshScope
 @RestController
 @RequestMapping("member/member")
 public class MemberController {
@@ -38,18 +36,10 @@ public class MemberController {
     @Autowired
     private CouponFeignService couponFeignService;
 
-    @Value("${memberr.username}")
-    private String username;
-
-    @Value("${memberr.password}")
-    private String password;
-
     @RequestMapping("/coupons")
     public R coupon() {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setNickname("张三");
-        memberEntity.setUsername(username);
-        memberEntity.setPassword(password);
 
         R membercoupons = couponFeignService.membercoupons();
 
@@ -88,6 +78,33 @@ public class MemberController {
 		memberService.save(member);
 
         return R.ok();
+    }
+
+    @PostMapping("/login")
+    public R login(@RequestBody Map<String, Object> params) {
+        String username = (String) params.get("username");
+        String password = (String) params.get("password");
+        MemberEntity member = memberService.login(username, password);
+        if (member == null) {
+            return R.error("用户名或密码错误");
+        }
+        return R.ok().put("member", member);
+    }
+
+    @PostMapping("/register")
+    public R register(@RequestBody MemberEntity member) {
+        R result = memberService.register(member);
+        if ((Integer) result.get("code") == 0) {
+            MemberEntity saved = memberService.findByUsername(member.getUsername());
+            result.put("member", saved);
+        }
+        return result;
+    }
+
+    @GetMapping("/findByUsername")
+    public R findByUsername(@RequestParam("username") String username) {
+        MemberEntity member = memberService.findByUsername(username);
+        return member != null ? R.ok().put("member", member) : R.error("用户不存在");
     }
 
     /**

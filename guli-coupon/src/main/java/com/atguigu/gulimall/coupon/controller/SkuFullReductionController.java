@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -62,6 +63,12 @@ public class SkuFullReductionController {
     public R save(@RequestBody SkuFullReductionEntity skuFullReduction){
 		skuFullReductionService.save(skuFullReduction);
 
+        return R.ok();
+    }
+
+    @RequestMapping("/saveBatch")
+    public R saveBatch(@RequestBody List<SkuFullReductionEntity> entities) {
+        skuFullReductionService.saveBatch(entities);
         return R.ok();
     }
 

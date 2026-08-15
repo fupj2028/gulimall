@@ -7,7 +7,7 @@ import com.atguigu.gulimall.order.entity.PaymentInfoEntity;
 import java.util.Map;
 
 /**
- * 支付信息�?
+ * 鏀粯淇℃伅琛?
  *
  * @author fupengju
  * @email 3545485659@qq.com

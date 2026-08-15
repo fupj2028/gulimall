@@ -8,6 +8,17 @@ spring:
     import:
       - optional:nacos:gulimall.yaml
       - optional:nacos:guli-product-dev.yaml
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+  session:
+    store-type: redis
+
   cloud:
     nacos:
       discovery:

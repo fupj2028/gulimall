@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.gulimall.ware.entity.PurchaseDetailEntity;
 import com.atguigu.gulimall.ware.service.PurchaseDetailService;
+import com.atguigu.gulimall.common.constant.WareConstant.PurchaseDetailStatusEnum;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.R;
 
@@ -71,6 +72,13 @@ public class PurchaseDetailController {
     @RequestMapping("/update")
     //@RequiresPermissions("ware:purchasedetail:update")
     public R update(@RequestBody PurchaseDetailEntity purchaseDetail){
+        PurchaseDetailEntity db = purchaseDetailService.getById(purchaseDetail.getId());
+        if (db == null) {
+            return R.error("采购需求不存在");
+        }
+        if (db.getStatus() >= PurchaseDetailStatusEnum.BUYING.getCode()) {
+            return R.error("当前状态不允许修改");
+        }
 		purchaseDetailService.updateById(purchaseDetail);
 
         return R.ok();
@@ -82,6 +90,15 @@ public class PurchaseDetailController {
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:purchasedetail:delete")
     public R delete(@RequestBody Long[] ids){
+        for (Long id : ids) {
+            PurchaseDetailEntity db = purchaseDetailService.getById(id);
+            if (db == null) {
+                return R.error("采购需求 " + id + " 不存在");
+            }
+            if (db.getStatus() >= PurchaseDetailStatusEnum.BUYING.getCode()) {
+                return R.error("采购需求 " + id + " 当前状态不允许删除");
+            }
+        }
 		purchaseDetailService.removeByIds(Arrays.asList(ids));
 
         return R.ok();

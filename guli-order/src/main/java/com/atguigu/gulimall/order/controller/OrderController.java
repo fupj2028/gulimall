@@ -1,10 +1,12 @@
 package com.atguigu.gulimall.order.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.atguigu.gulimall.order.service.OrderService;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.R;
+import com.atguigu.gulimall.common.vo.MemberOrderVo;
 
 
 
@@ -74,6 +77,22 @@ public class OrderController {
 		orderService.updateById(order);
 
         return R.ok();
+    }
+
+    /**
+     * 查询订单状态
+     */
+    @GetMapping("/status/{orderSn}")
+    public R status(@PathVariable("orderSn") String orderSn){
+        return R.ok().put("status", orderService.getOrderStatus(orderSn));
+    }
+
+    /**
+     * 按会员查询订单列表（会员中心展示用）
+     */
+    @GetMapping("/list/{memberId}")
+    public List<MemberOrderVo> listByMember(@PathVariable("memberId") Long memberId){
+        return orderService.listOrdersByMember(memberId);
     }
 
     /**

@@ -7,8 +7,6 @@ import com.atguigu.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import java.util.Map;
 
 /**
- * 属�?属性分组关�?
- *
  * @author fupengju
  * @email 3545485659@qq.com
  * @date 2026-07-05 17:59:52

@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -62,6 +63,12 @@ public class SpuBoundsController {
     public R save(@RequestBody SpuBoundsEntity spuBounds){
 		spuBoundsService.save(spuBounds);
 
+        return R.ok();
+    }
+
+    @RequestMapping("/saveBatch")
+    public R saveBatch(@RequestBody List<SpuBoundsEntity> entities) {
+        spuBoundsService.saveBatch(entities);
         return R.ok();
     }
 

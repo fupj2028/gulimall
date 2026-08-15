@@ -13,4 +13,12 @@
     </resultMap>
 
 
+    <update id="updateBrandName">
+        UPDATE pms_category_brand_relation SET brand_name = #{brandName} WHERE brand_id = #{brandId}
+    </update>
+
+    <update id="updateCatelogName">
+        UPDATE pms_category_brand_relation SET catelog_name = #{catelogName} WHERE catelog_id = #{catelogId}
+    </update>
+
 </mapper>

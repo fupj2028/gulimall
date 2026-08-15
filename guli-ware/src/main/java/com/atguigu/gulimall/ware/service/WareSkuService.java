@@ -4,6 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.ware.entity.WareSkuEntity;
 
+import com.atguigu.gulimall.common.to.SkuHasStockVo;
+import com.atguigu.gulimall.common.to.StockLockedTo;
+import com.atguigu.gulimall.common.to.WareSkuLockVo;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +21,15 @@ import java.util.Map;
 public interface WareSkuService extends IService<WareSkuEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void addStock(Long skuId, Long wareId, Integer skuNum);
+
+    List<SkuHasStockVo> getSkuHasStock(List<Long> skuIds);
+
+    StockLockedTo lockStock(WareSkuLockVo wareSkuLockVo);
+
+    void unlockStock(StockLockedTo to);
+
+    void deductStock(StockLockedTo to);
 }
 

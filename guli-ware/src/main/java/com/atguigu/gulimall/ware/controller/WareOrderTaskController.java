@@ -19,7 +19,7 @@ import com.atguigu.gulimall.common.utils.R;
 
 
 /**
- * 库存工作�?
+ * 搴撳瓨宸ヤ綔鍗?
  *
  * @author fupengju
  * @email 3545485659@qq.com
@@ -32,7 +32,7 @@ public class WareOrderTaskController {
     private WareOrderTaskService wareOrderTaskService;
 
     /**
-     * 列表
+     * 鍒楄〃
      */
     @RequestMapping("/list")
     //@RequiresPermissions("ware:wareordertask:list")
@@ -44,7 +44,7 @@ public class WareOrderTaskController {
 
 
     /**
-     * 信息
+     * 淇℃伅
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("ware:wareordertask:info")
@@ -55,7 +55,7 @@ public class WareOrderTaskController {
     }
 
     /**
-     * 保存
+     * 淇濆瓨
      */
     @RequestMapping("/save")
     //@RequiresPermissions("ware:wareordertask:save")
@@ -66,7 +66,7 @@ public class WareOrderTaskController {
     }
 
     /**
-     * 修改
+     * 淇敼
      */
     @RequestMapping("/update")
     //@RequiresPermissions("ware:wareordertask:update")
@@ -77,7 +77,7 @@ public class WareOrderTaskController {
     }
 
     /**
-     * 删除
+     * 鍒犻櫎
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:wareordertask:delete")

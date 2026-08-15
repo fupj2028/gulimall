@@ -18,9 +18,27 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        QueryWrapper<PurchaseDetailEntity> queryWrapper = new QueryWrapper<>();
+
+        String key = (String) params.get("key");
+        if (key != null && !key.isEmpty()) {
+            queryWrapper.and(wrapper -> wrapper.eq("id", key)
+                    .or().eq("sku_id", key));
+        }
+
+        String status = (String) params.get("status");
+        if (status != null && !status.isEmpty()) {
+            queryWrapper.eq("status", status);
+        }
+
+        String wareId = (String) params.get("wareId");
+        if (wareId != null && !wareId.isEmpty()) {
+            queryWrapper.eq("ware_id", wareId);
+        }
+
         IPage<PurchaseDetailEntity> page = this.page(
                 new Query<PurchaseDetailEntity>().getPage(params),
-                new QueryWrapper<PurchaseDetailEntity>()
+                queryWrapper
         );
 
         return new PageUtils(page);

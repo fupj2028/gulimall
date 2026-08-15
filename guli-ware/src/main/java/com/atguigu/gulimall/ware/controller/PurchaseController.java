@@ -1,6 +1,8 @@
 package com.atguigu.gulimall.ware.controller;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.gulimall.ware.entity.PurchaseEntity;
 import com.atguigu.gulimall.ware.service.PurchaseService;
+import com.atguigu.gulimall.ware.vo.MergeVo;
+import com.atguigu.gulimall.ware.vo.PurchaseDoneVo;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.R;
 
@@ -42,6 +46,17 @@ public class PurchaseController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 列表
+     */
+    @RequestMapping("/unreceive/list")
+    //@RequiresPermissions("ware:purchase:list")
+    public R unreceiveList(@RequestParam Map<String, Object> params){
+        PageUtils page = purchaseService.queryUnreceiveList(params);
+
+        return R.ok().put("page", page);
+    }
+
 
     /**
      * 信息
@@ -60,6 +75,8 @@ public class PurchaseController {
     @RequestMapping("/save")
     //@RequiresPermissions("ware:purchase:save")
     public R save(@RequestBody PurchaseEntity purchase){
+        purchase.setCreateTime(new Date());
+        purchase.setUpdateTime(new Date());
 		purchaseService.save(purchase);
 
         return R.ok();
@@ -77,8 +94,36 @@ public class PurchaseController {
     }
 
     /**
-     * 删除
+     * 修改
      */
+    @RequestMapping("/merge")
+    //@RequiresPermissions("ware:purchase:update")
+    public R merge(@RequestBody MergeVo mergeVo){
+		purchaseService.merge(mergeVo);
+
+        return R.ok();
+    }
+
+    /**
+     * 接收采购单
+     */
+    @RequestMapping("/received")
+    //@RequiresPermissions("ware:purchase:update")
+    public R received(@RequestBody List<Long> ids){
+        purchaseService.received(ids);
+        return R.ok();
+    }
+
+    /**
+     * 采购完成
+     */
+    @RequestMapping("/done")
+    //@RequiresPermissions("ware:purchase:update")
+    public R done(@RequestBody PurchaseDoneVo purchaseDoneVo){
+        purchaseService.done(purchaseDoneVo);
+        return R.ok();
+    }
+
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:purchase:delete")
     public R delete(@RequestBody Long[] ids){
